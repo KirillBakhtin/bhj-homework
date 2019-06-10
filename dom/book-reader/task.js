@@ -1,63 +1,21 @@
-'use strict'
-const links = Array.from(document.getElementsByTagName('a')),
-      content = document.getElementById('book');
+"use strict" 
 
-for (let item of links) {
+const sizeBtn = document.querySelectorAll('a.font-size');
+const bookContent = document.querySelector('.book__content');
 
-  if (item.closest('.book__control_font-size')) {
+for (const btn of sizeBtn) {
+    btn.onclick = function() {
+        document.querySelector('.font-size_active').classList.remove('font-size_active');
+        document.querySelector('.book__content').classList.remove('book_fs-small');
+        document.querySelector('.book__content').classList.remove('book_fs-big');
+        btn.classList.add('font-size_active');
 
-    item.addEventListener('click', function(event) {
-      event.preventDefault();
+        if (btn.classList.contains('font-size_small')) {
+            bookContent.classList.add('book_fs-small');
+        } else if (btn.classList.contains('font-size_big')) {
+            bookContent.classList.add('book_fs-big');
+        }
 
-      links.forEach(i => {
-        i.classList.remove('font-size_active');
-        content.classList.remove(`book_fs-${i.dataset.size}`);
-      });
-
-      this.classList.add('font-size_active');
-
-      if (this.dataset.size) {
-        content.classList.toggle(`book_fs-${this.dataset.size}`);
-      }
-
-    });
-  }
-
-  if (item.closest('.book__control_background')) {
-
-    item.addEventListener('click', function(event) {
-      event.preventDefault();
-
-      links.forEach(i => {
-        i.classList.remove('color_active');
-        content.classList.remove(`color_${i.dataset.color}`);
-      });
-
-      this.classList.add('color_active');
-
-      if (this.dataset.color) {
-          content.classList.add(`color_${this.dataset.color}`);
-      }
-
-    });
-  }
-
-  if (item.closest('.book__control_color')) {
-
-    item.addEventListener('click', function(event) {
-      event.preventDefault();
-
-      links.forEach(i => {
-        i.classList.remove('color_active');
-        content.style.color = 'black';
-      });
-
-      this.classList.add('color_active');
-
-      if (this.dataset.color) {
-        content.style.color = this.dataset.color;
-      }
-      
-    });
-  }
-}
+        return false;
+    }
+};
